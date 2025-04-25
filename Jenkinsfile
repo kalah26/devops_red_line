@@ -18,13 +18,13 @@ pipeline {
             steps {
                 dir('./Backend/odc') {
                     echo "Creating the virtual environn⚙️"
-                    sh '''
-                        python3 -m venv venv
-                        . venv/bin/activate
-                        pip install --upgrade pip
-                        pip install -r requirements.txt
-                        python manage.py test
-                    '''
+                    // sh '''
+                    //     python3 -m venv venv
+                    //     . venv/bin/activate
+                    //     pip install --upgrade pip
+                    //     pip install -r requirements.txt
+                    //     python manage.py test
+                    // '''
                 }
             }
         }
