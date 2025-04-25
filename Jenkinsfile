@@ -47,6 +47,7 @@ pipeline {
             steps {
                 script {
                     echo "🐳 Building the backend image"
+                    sh "pwd"
                     sh "docker build -t ${DOCKERHUB_USER}/backend_red_line:latest -f ./Backend/odc ./Backend/odc"
 
                     echo "🐳 CBuilding the frontend image"
