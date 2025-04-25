@@ -2,22 +2,22 @@ pipeline {
     agent any
 
     environment {
-        DOCKER_HUB_CREDENTIALS = 'jnk-creds' 
-        DOCKERHUB_USER = 'mormbathie'       
+        DOCKER_HUB_CREDENTIALS = 'genecodo' 
+        DOCKERHUB_USER = 'genecodo'       
     }
 
     stages {
         stage('Checkout') {
             steps {
-                echo "📥 Clonage du dépôt Git"
-                checkout scm
+                echo "Cloning red_line's repository from git📥"
+                checkout main 
             }
         }
 
-        stage('Build & Test Backend (Django)') {
+        stage('Building Backend (Django)...') {
             steps {
-                dir('Backend/odc') {
-                    echo "⚙️ Création de l'environnement virtuel et test de Django"
+                dir('./Backend/odc') {
+                    echo "Creating the virtual environn⚙️"
                     sh '''
                         python3 -m venv venv
                         . venv/bin/activate
@@ -29,10 +29,10 @@ pipeline {
             }
         }
 
-        stage('Build & Test Frontend (React)') {
+        stage('Building Frontend (React)...') {
             steps {
-                dir('Frontend') {
-                    echo "⚙️ Installation et test du frontend React"
+                dir('./Frontend') {
+                    echo "⚙️ Installing the frontend part"
                     sh '''
                         export PATH=$PATH:/var/lib/jenkins/.nvm/versions/node/v22.15.0/bin/
                         npm install
@@ -46,23 +46,23 @@ pipeline {
         stage('Build Docker Images') {
             steps {
                 script {
-                    echo "🐳 Construction de l'image Docker Backend"
-                    sh "docker build -t ${DOCKERHUB_USER}/odc_backend:latest -f ./Backend/odc/Dockerfile ./Backend/odc"
+                    echo "🐳 Building the backend image"
+                    sh "docker build -t ${DOCKERHUB_USER}/backend_red_line:latest -f ./Backend/odc/Dockerfile ./Backend/odc"
 
-                    echo "🐳 Construction de l'image Docker Frontend"
-                    sh "docker build -t ${DOCKERHUB_USER}/odc_frontend:latest ./Frontend"
+                    echo "🐳 CBuilding the frontend image"
+                    sh "docker build -t ${DOCKERHUB_USER}/frontend_red_line:latest ./Frontend"
                 }
             }
         }
 
-        stage('Push Docker Images') {
+        stage('Pushing to Docker Hub') {
             steps {
-                echo "🚀 Envoi des images Docker sur Docker Hub"
+                echo "Pushing images to Docker Hub 🚀"
                 withCredentials([usernamePassword(credentialsId: "${DOCKER_HUB_CREDENTIALS}", usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
                     sh '''
                         echo "$DOCKER_PASS" | docker login -u "$DOCKER_USER" --password-stdin
-                        docker push $DOCKER_USER/odc_backend:latest
-                        docker push $DOCKER_USER/odc_frontend:latest
+                        docker push $DOCKER_USER/backend_red_line:latest
+                        docker push $DOCKER_USER/frontend_red_line:latest
                     '''
                 }
             }
@@ -74,19 +74,18 @@ pipeline {
                 docker-compose down || true
                 docker-compose build
                 docker-compose up
-                #docker run --rm -d -p 8081:8081 ${DOCKERHUB_USER}/mon-frontend:latest
                 '''
                 }
             }
         }
     }
 
-    post {
-        success {
-            echo "✅ CI/CD terminé avec succès"
-        }
-        failure {
-            echo "❌ Échec du pipeline"
-        }
-    }
+    // post {
+    //     success {
+    //         echo "CI/CD successfully runned ✅"
+    //     }
+    //     failure {
+    //         echo "Your Pipeline failes❌"
+    //     }
+    // }
 }
