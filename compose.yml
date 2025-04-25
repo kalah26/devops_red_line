@@ -4,7 +4,7 @@ services:
     image: backend
     build: 
       context: .
-      dockerfile: ./dockerfile
+      dockerfile: ./Backend/odc/dockerfile
     ports:
       - 8000:8000
     environment:
@@ -25,7 +25,7 @@ services:
       - pgdata:/var/lib/postgresql/data
 
   db-migrations:
-    image: backend
+    image: migrarions
     command: python manage.py migrate
     depends_on:
       - database
@@ -35,7 +35,7 @@ services:
   frontend:
     image: frontend
     build:
-      context: ../../Frontend/
+      context: ./Frontend/
       dockerfile: dockerfile
     ports:
       - 5173:5173
