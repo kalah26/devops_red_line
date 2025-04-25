@@ -33,12 +33,12 @@ pipeline {
             steps {
                 dir('./Frontend') {
                     echo "⚙️ Installing the frontend part"
-                    sh '''
-                        export PATH=$PATH:/var/lib/jenkins/.nvm/versions/node/v22.15.0/bin/
-                        npm install
-                        npm run build
-                       # npm test -- --watchAll=false
-                    '''
+                    // sh '''
+                    //     export PATH=$PATH:/var/lib/jenkins/.nvm/versions/node/v22.15.0/bin/
+                    //     npm install
+                    //     npm run build
+                    //    # npm test -- --watchAll=false
+                    // '''
                 }
             }
         }
