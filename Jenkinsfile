@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        DOCKER_HUB_CREDENTIALS = 'genecodo' 
+        DOCKER_HUB_CREDENTIALS = '93a241e5-5711-4611-9afc-02d46945a4ae' 
         DOCKERHUB_USER = 'genecodo'       
     }
 
@@ -10,7 +10,7 @@ pipeline {
         stage('Checkout') {
             steps {
                 echo "Cloning red_line's repository from git📥"
-                checkout main 
+                checkout scm 
             }
         }
 
