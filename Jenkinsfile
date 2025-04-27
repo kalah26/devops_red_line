@@ -70,7 +70,7 @@ pipeline {
         stage('run'){
             steps{
                 sh '''
-                echo ${PWD} && ls -lR
+                echo ${PWD} && ls -l
                 docker-compose down || true
                 docker-compose build
                 docker-compose up
