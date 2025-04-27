@@ -3,8 +3,8 @@ services:
   backend:
     image: backend
     build: 
-      context: .
-      dockerfile: ./Backend/odc/dockerfile
+      context: ./Backend/odc/
+      dockerfile: ./dockerfile
     ports:
       - 8000:8000
     environment:
