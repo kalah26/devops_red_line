@@ -18,13 +18,13 @@ pipeline {
             steps {
                 dir('./Backend/odc') {
                     echo "Creating the virtual environn⚙️"
-                    // sh '''
-                    //     python3 -m venv venv
-                    //     . venv/bin/activate
-                    //     pip install --upgrade pip
-                    //     pip install -r requirements.txt
-                    //     python manage.py test
-                    // '''
+                    sh '''
+                        python3 -m venv venv
+                        . venv/bin/activate
+                        pip install --upgrade pip
+                        pip install -r requirements.txt
+                        python manage.py test
+                    '''
                 }
             }
         }
@@ -33,12 +33,12 @@ pipeline {
             steps {
                 dir('./Frontend') {
                     echo "⚙️ Installing the frontend part"
-                    // sh '''
-                    //     export PATH=$PATH:/var/lib/jenkins/.nvm/versions/node/v22.15.0/bin/
-                    //     npm install
-                    //     npm run build
-                    //    # npm test -- --watchAll=false
-                    // '''
+                    sh '''
+                        export PATH=$PATH:/var/lib/jenkins/.nvm/versions/node/v22.15.0/bin/
+                        npm install
+                        npm run build
+                       # npm test -- --watchAll=false
+                    '''
                 }
             }
         }
