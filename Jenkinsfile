@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        DOCKER_HUB_CREDENTIALS = '93a241e5-5711-4611-9afc-02d46945a4ae' 
+        DOCKER_HUB_CREDENTIALS = 'rlj' 
         DOCKERHUB_USER = 'genecodo'       
     }
 
