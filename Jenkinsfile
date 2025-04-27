@@ -71,6 +71,7 @@ pipeline {
             steps{
                 dir('cd ..'){
                 sh '''
+                echo ${PWD} && ls -lR
                 docker-compose down || true
                 docker-compose build
                 docker-compose up
