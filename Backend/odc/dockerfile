@@ -6,6 +6,6 @@ COPY ./Backend/odc/requirements.txt .
 RUN python -m pip install -r requirements.txt
 RUN pip install gunicorn
 WORKDIR /app
-COPY . /app/
+COPY ./Backend/odc/ /app/
 RUN adduser -u 5678 --disabled-password --gecos "" appuser && chown -R appuser /app
 CMD [ "gunicorn", "--bind", "0.0.0.0:8000", "odc.wsgi:application" ]
