@@ -71,8 +71,8 @@ pipeline {
             steps{
                 sh '''
                 echo ${PWD} && ls -l
-                docker-compose down || true
-                docker-compose build
+                docker compose down || true
+                docker compose build
                 '''
             }
         }
