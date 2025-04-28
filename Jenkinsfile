@@ -73,18 +73,21 @@ pipeline {
                 echo ${PWD} && ls -l
                 docker-compose down || true
                 docker-compose build
-                docker-compose up
                 '''
             }
         }
     }
 
-    // post {
-    //     success {
-    //         echo "CI/CD successfully runned ✅"
-    //     }
-    //     failure {
-    //         echo "Your Pipeline failes❌"
-    //     }
-    // }
+    post {
+        failure {
+            mail to: 'kalamouu@gmail.com',
+                 subject: "❌ Échec du pipeline Jenkins",
+                 body: "Le pipeline a échoué. Vérifie Jenkins pour plus de détails."
+        }
+        success {
+            mail to: 'kalamouu@gmail.com',
+                 subject: "✅ Pipeline Jenkins réussi",
+                 body: "Tout s'est bien passé. L'application est déployée ! 🎉"
+        }
+    }
 }
