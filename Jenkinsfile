@@ -23,13 +23,14 @@ pipeline {
                     withCredentials([string(credentialsId: 'sonar-tkn', variable: 'SONAR_TOKEN')]) {
                         sh '''
                             docker run --rm \
-                            -e SONAR_HOST_URL=http://host.docker.internal:9000 \
-                            -e SONAR_LOGIN=$SONAR_TOKEN \
-                            -v "$(pwd)":/usr/src \
-                            sonarsource/sonar-scanner-cli \
-                            -Dsonar.projectKey=red_line_front \
-                            -Dsonar.sources=. \
-                            -Dsonar.exclusions=**/venv/**,**/node_modules/*
+                                --network host \
+                                -e SONAR_HOST_URL=http://localhost:9000 \
+                                -e SONAR_LOGIN=$SONAR_TOKEN \
+                                -v "$(pwd)":/usr/src \
+                                sonarsource/sonar-scanner-cli \
+                                -Dsonar.projectKey=red_line_front \
+                                -Dsonar.sources=. \
+                                -Dsonar.exclusions=**/venv/**,**/node_modules/**
                         '''
                     }
                 }
