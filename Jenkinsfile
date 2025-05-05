@@ -9,6 +9,11 @@ pipeline {
         SONAR_PROJECT_KEY = 'red_line_front'     
     }
 
+    tools {
+        sonarQubeScanner 'SonarQube'
+    }
+
+
     stages {
         stage('Checkout') {
             steps {
@@ -18,20 +23,16 @@ pipeline {
         }
 
         stage('SonarQube Analysis') {
-            steps {
-                withSonarQubeEnv('SonarQube') {
-                    withCredentials([string(credentialsId: 'sonar-tkn', variable: 'SONAR_TOKEN')]) {
-                        echo '🔍 Exécution de l\'analyse SonarQube'
-                        sh """
-                            sonar-scanner \
-                            -Dsonar.projectKey=$SONAR_PROJECT_KEY \
-                            -Dsonar.host.url=$SONAR_HOST_URL \
-                            -Dsonar.login=$SONAR_TOKEN \
-                            -Dsonar.exclusions=**/venv/**,**/node_modules/** \
-                            -Dsonar.sources=. \
-                            -X
-                        """
-                    }
+            withSonarQubeEnv('SonarQubeServer') {
+                withEnv(["SONAR_TOKEN=${credentials('sonar-tkn')}"]) {
+                    sh '''
+                        sonar-scanner \
+                        -Dsonar.projectKey=red_line_front \
+                        -Dsonar.sources=. \
+                        -Dsonar.exclusions=**/venv/**,**/node_modules/** \
+                        -Dsonar.host.url=http://localhost:9000 \
+                        -Dsonar.login=$SONAR_TOKEN
+                    '''
                 }
             }
         }
