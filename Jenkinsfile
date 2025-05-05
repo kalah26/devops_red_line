@@ -23,7 +23,7 @@ pipeline {
         }
 
         stage('SonarQube Analysis') {
-            withSonarQubeEnv('SonarQubeServer') {
+            withSonarQubeEnv('SonarQube') {
                 withEnv(["SONAR_TOKEN=${credentials('sonar-tkn')}"]) {
                     sh '''
                         sonar-scanner \
