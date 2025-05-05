@@ -22,6 +22,7 @@ pipeline {
                 withSonarQubeEnv('SonarQube') {
                     withCredentials([string(credentialsId: 'sonar-tkn', variable: 'SONAR_TOKEN')]) {
                         sh '''
+                            export PATH=$PATH:/var/lib/jenkins/sonar-scanner-5.0.1.3006-linux/bin
                             sonar-scanner \
                             -Dsonar.projectKey=red_line_front \
                             -Dsonar.sources=. \
