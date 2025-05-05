@@ -22,13 +22,14 @@ pipeline {
                 withSonarQubeEnv('SonarQube') {
                     withCredentials([string(credentialsId: 'sonar-tkn', variable: 'SONAR_TOKEN')]) {
                         sh '''
-                            export PATH=$PATH:/var/lib/jenkins/sonar-scanner-5.0.1.3006-linux/bin
-                            sonar-scanner \
+                            docker run --rm \
+                            -e SONAR_HOST_URL=http://host.docker.internal:9000 \
+                            -e SONAR_LOGIN=$SONAR_TOKEN \
+                            -v "$(pwd)":/usr/src \
+                            sonarsource/sonar-scanner-cli \
                             -Dsonar.projectKey=red_line_front \
                             -Dsonar.sources=. \
-                            -Dsonar.exclusions=**/venv/**,**/node_modules/** \
-                            -Dsonar.host.url=http://localhost:9000 \
-                            -Dsonar.login=$SONAR_TOKEN
+                            -Dsonar.exclusions=**/venv/**,**/node_modules/*
                         '''
                     }
                 }
