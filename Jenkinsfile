@@ -17,7 +17,7 @@ pipeline {
         stage('Analyse SonarQube') {
             steps {
                     echo '🔍 Exécution de l\'analyse SonarQube'
-                    sh ""
+                    sh """
                         sonar-scanner \
                           -Dsonar.projectKey=red_line_front \
                           -Dsonar.sources=. \
