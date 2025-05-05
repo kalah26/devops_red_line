@@ -3,7 +3,10 @@ pipeline {
 
     environment {
         DOCKER_HUB_CREDENTIALS = 'rlj' 
-        DOCKERHUB_USER = 'genecodo'       
+        DOCKERHUB_USER = 'genecodo'  
+
+        SONAR_HOST_URL = 'http://localhost:9000'
+        SONAR_PROJECT_KEY = 'red_line_front'     
     }
 
     stages {
@@ -15,9 +18,21 @@ pipeline {
         }
 
         stage('SonarQube Analysis') {
-            def scannerHome = tool 'SonarQube';
-            withSonarQubeEnv() {
-            sh "${scannerHome}/bin/sonar-scanner"
+            steps {
+                withSonarQubeEnv('SonarQube') {
+                    withCredentials([string(credentialsId: 'sonar-tkn', variable: 'SONAR_TOKEN')]) {
+                        echo '🔍 Exécution de l\'analyse SonarQube'
+                        sh """
+                            sonar-scanner \
+                            -Dsonar.projectKey=$SONAR_PROJECT_KEY \
+                            -Dsonar.host.url=$SONAR_HOST_URL \
+                            -Dsonar.login=$SONAR_TOKEN \
+                            -Dsonar.exclusions=**/venv/**,**/node_modules/** \
+                            -Dsonar.sources=. \
+                            -X
+                        """
+                    }
+                }
             }
         }
 
