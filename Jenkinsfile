@@ -25,12 +25,14 @@ pipeline {
                             docker run --rm \
                                 --network host \
                                 -e SONAR_HOST_URL=http://localhost:9000 \
-                                -e SONAR_LOGIN=$SONAR_TOKEN \
+                                -e SONAR_TOKEN=$SONAR_TOKEN \
                                 -v "$(pwd)":/usr/src \
                                 sonarsource/sonar-scanner-cli \
                                 -Dsonar.projectKey=red_line_front \
                                 -Dsonar.sources=. \
-                                -Dsonar.exclusions=**/venv/**,**/node_modules/**
+                                -Dsonar.exclusions=**/venv/**,**/node_modules/** \
+                                -Dsonar.host.url=$SONAR_HOST_URL \
+                                -Dsonar.login=$SONAR_TOKEN
                         '''
                     }
                 }
