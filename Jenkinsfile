@@ -23,16 +23,18 @@ pipeline {
         }
 
         stage('SonarQube Analysis') {
-            withSonarQubeEnv('SonarQube') {
-                withEnv(["SONAR_TOKEN=${credentials('sonar-tkn')}"]) {
-                    sh '''
-                        sonar-scanner \
-                        -Dsonar.projectKey=red_line_front \
-                        -Dsonar.sources=. \
-                        -Dsonar.exclusions=**/venv/**,**/node_modules/** \
-                        -Dsonar.host.url=http://localhost:9000 \
-                        -Dsonar.login=$SONAR_TOKEN
-                    '''
+            steps {
+                withSonarQubeEnv('SonarQube') {
+                    withCredentials([string(credentialsId: 'sonar-tkn', variable: 'SONAR_TOKEN')]) {
+                        sh '''
+                            sonar-scanner \
+                            -Dsonar.projectKey=red_line_front \
+                            -Dsonar.sources=. \
+                            -Dsonar.exclusions=**/venv/**,**/node_modules/** \
+                            -Dsonar.host.url=http://localhost:9000 \
+                            -Dsonar.login=$SONAR_TOKEN
+                        '''
+                    }
                 }
             }
         }
