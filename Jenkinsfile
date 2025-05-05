@@ -14,16 +14,10 @@ pipeline {
             }
         }
 
-        stage('Analyse SonarQube') {
-            steps {
-                    echo '🔍 Exécution de l\'analyse SonarQube'
-                    sh """
-                        sonar-scanner \
-                          -Dsonar.projectKey=red_line_front \
-                          -Dsonar.sources=. \
-                          -Dsonar.host.url=http://127.0.0.1:9000 \
-                          -Dsonar.token=sqp_8286d323c02dde8bed09835c188e03025984126a
-                    """
+        stage('SonarQube Analysis') {
+            def scannerHome = tool 'SonarScanner';
+            withSonarQubeEnv() {
+            sh "${scannerHome}/bin/sonar-scanner"
             }
         }
 
