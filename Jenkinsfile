@@ -9,11 +9,6 @@ pipeline {
         SONAR_PROJECT_KEY = 'red_line_front'     
     }
 
-    tools {
-        sonarQubeScanner 'SonarQube'
-    }
-
-
     stages {
         stage('Checkout') {
             steps {
