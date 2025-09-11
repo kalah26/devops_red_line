@@ -1,0 +1,18 @@
+# Production environment ConfigMaps patch
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: backend-config
+data:
+  DEBUG: "False"
+  ALLOWED_HOSTS: "devops-red-line-prod.example.com,localhost"
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: frontend-config
+data:
+  REACT_APP_API_URL: "https://devops-red-line-prod.example.com/api"
+  REACT_APP_ENV: "production"
+  REACT_APP_DEBUG: "false"

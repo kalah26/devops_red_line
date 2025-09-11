@@ -1,0 +1,40 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: devops-red-line-ingress
+  annotations:
+    argocd.argoproj.io/sync-wave: "4"
+    nginx.ingress.kubernetes.io/rewrite-target: /
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "false"
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: devops-red-line.local  # You can change this to your domain
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: front-service
+            port:
+              number: 80
+      - path: /api
+        pathType: Prefix
+        backend:
+          service:
+            name: backend
+            port:
+              number: 8000
+---
+# Optional: If you want to use HTTPS with self-signed certificate
+# apiVersion: v1
+# kind: Secret
+# metadata:
+#   name: devops-red-line-tls
+#   namespace: default
+# type: kubernetes.io/tls
+# data:
+#   tls.crt: # base64 encoded cert
+#   tls.key: # base64 encoded key

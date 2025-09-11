@@ -1,0 +1,41 @@
+# Backend ConfigMap
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: backend-config
+  annotations:
+    argocd.argoproj.io/sync-wave: "-1"
+data:
+  # Django Settings
+  DEBUG: "False"
+  ALLOWED_HOSTS: "*"
+  
+  # Database Configuration
+  DB_ENGINE: "django.db.backends.postgresql"
+  DB_HOST: "database"
+  DB_PORT: "5432"
+  
+  # CORS Settings
+  CORS_ALLOW_ALL_ORIGINS: "True"
+  
+  # Application Settings
+  LANGUAGE_CODE: "en-us"
+  TIME_ZONE: "UTC"
+  USE_I18N: "True"
+  USE_TZ: "True"
+
+---
+# Frontend ConfigMap
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: frontend-config
+  annotations:
+    argocd.argoproj.io/sync-wave: "-1"
+data:
+  # API Configuration
+  REACT_APP_API_URL: "http://devops-red-line.local/api"
+  
+  # Application Settings
+  REACT_APP_ENV: "development"
+  REACT_APP_DEBUG: "true"

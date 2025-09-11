@@ -1,0 +1,18 @@
+# Development environment ConfigMaps patch
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: backend-config
+data:
+  DEBUG: "True"
+  ALLOWED_HOSTS: "*"
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: frontend-config
+data:
+  REACT_APP_API_URL: "http://devops-red-line.local/api"
+  REACT_APP_ENV: "development"
+  REACT_APP_DEBUG: "true"

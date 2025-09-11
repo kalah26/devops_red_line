@@ -2,21 +2,24 @@ apiVersion: v1
 kind: Service
 metadata:
   name: front-service
+  annotations:
+    argocd.argoproj.io/sync-wave: "3"
 spec:
-  type: NodePort
+  type: ClusterIP
   selector:
     app: front-app
   ports:
     - protocol: TCP
       port: 80
       targetPort: 80
-      nodePort: 30517
 
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: front-app
+  annotations:
+    argocd.argoproj.io/sync-wave: "3"
 spec:
   replicas: 2
   selector:
@@ -33,6 +36,23 @@ spec:
         ports:
         - containerPort: 80
         imagePullPolicy: Always
+        env:
+        # Frontend configuration from ConfigMap
+        - name: REACT_APP_API_URL
+          valueFrom:
+            configMapKeyRef:
+              name: frontend-config
+              key: REACT_APP_API_URL
+        - name: REACT_APP_ENV
+          valueFrom:
+            configMapKeyRef:
+              name: frontend-config
+              key: REACT_APP_ENV
+        - name: REACT_APP_DEBUG
+          valueFrom:
+            configMapKeyRef:
+              name: frontend-config
+              key: REACT_APP_DEBUG
         resources:
           requests:
             memory: "128Mi"

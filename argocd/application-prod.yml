@@ -1,0 +1,31 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: devops-red-line-prod
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+  labels:
+    environment: production
+spec:
+  project: devops-red-line
+  source:
+    repoURL: https://github.com/kalah26/devops_red_line.git  # Update with your actual repo URL
+    targetRevision: main  # or master
+    path: manifests/overlays/production
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: devops-red-line-prod
+  syncPolicy:
+    # Manual sync for production - no automated deployment
+    syncOptions:
+      - CreateNamespace=true
+      - PrunePropagationPolicy=foreground
+      - PruneLast=true
+    retry:
+      limit: 5
+      backoff:
+        duration: 5s
+        factor: 2
+        maxDuration: 3m0s
+  revisionHistoryLimit: 10

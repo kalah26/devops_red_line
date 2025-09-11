@@ -1,0 +1,24 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: devops-red-line-prod
+
+resources:
+  - ../../base
+
+commonLabels:
+  environment: production
+  
+commonAnnotations:
+  environment: production
+
+patchesStrategicMerge:
+  - replica-count.yml
+  - resource-limits.yml
+  - config-patch.yml
+
+images:
+  - name: genecodo/frontend_red_line
+    newTag: v2
+  - name: genecodo/backend_red_line  
+    newTag: latest
