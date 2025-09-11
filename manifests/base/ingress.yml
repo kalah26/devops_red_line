@@ -4,7 +4,6 @@ metadata:
   name: devops-red-line-ingress
   annotations:
     argocd.argoproj.io/sync-wave: "4"
-    nginx.ingress.kubernetes.io/rewrite-target: /
     nginx.ingress.kubernetes.io/ssl-redirect: "false"
     nginx.ingress.kubernetes.io/force-ssl-redirect: "false"
 spec:
@@ -13,6 +12,13 @@ spec:
   - host: devops-red-line.local  # You can change this to your domain
     http:
       paths:
+      - path: /api/
+        pathType: Prefix
+        backend:
+          service:
+            name: backend
+            port:
+              number: 8000
       - path: /
         pathType: Prefix
         backend:
@@ -20,13 +26,6 @@ spec:
             name: front-service
             port:
               number: 80
-      - path: /api
-        pathType: Prefix
-        backend:
-          service:
-            name: backend
-            port:
-              number: 8000
 ---
 # Optional: If you want to use HTTPS with self-signed certificate
 # apiVersion: v1
