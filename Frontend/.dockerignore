@@ -38,6 +38,10 @@ dockerfile
 .dockerignore
 docker-compose*.yml
 
+# Important: Include essential Docker files
+!docker-entrypoint.sh
+!nginx.conf
+
 # Documentation
 README.md
 *.md
