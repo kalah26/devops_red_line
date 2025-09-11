@@ -9,7 +9,7 @@ spec:
   project: default
   source:
     repoURL: https://github.com/kalah26/devops_red_line.git  # Update with your actual repo URL
-    targetRevision: HEAD
+    targetRevision: main
     path: manifests/base
   destination:
     server: https://kubernetes.default.svc

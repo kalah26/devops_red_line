@@ -11,7 +11,7 @@ spec:
   project: devops-red-line
   source:
     repoURL: https://github.com/kalah26/devops_red_line.git  # Update with your actual repo URL
-    targetRevision: develop  # or main/master
+    targetRevision: main
     path: manifests/overlays/development
   destination:
     server: https://kubernetes.default.svc
