@@ -4,7 +4,7 @@ pipeline {
     environment {
         // Jenkins username/password credential for Docker Hub.
         // The image namespace comes from that credential's username.
-        DOCKER_HUB_CREDENTIALS = 'dockerhub'
+        DOCKER_HUB_CREDENTIALS = 'rlj'
 
         SONAR_HOST_URL = 'http://localhost:9000'
         SONAR_PROJECT_KEY = 'red_line_front'     
