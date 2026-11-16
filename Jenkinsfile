@@ -2,8 +2,9 @@ pipeline {
     agent any
 
     environment {
-        DOCKER_HUB_CREDENTIALS = 'rlj' 
-        DOCKERHUB_USER = 'genecodo'  
+        // Jenkins username/password credential for Docker Hub.
+        // The image namespace comes from that credential's username.
+        DOCKER_HUB_CREDENTIALS = 'dockerhub'
 
         SONAR_HOST_URL = 'http://localhost:9000'
         SONAR_PROJECT_KEY = 'red_line_front'     
@@ -70,12 +71,12 @@ pipeline {
 
         stage('Build Docker Images') {
             steps {
-                script {
+                withCredentials([usernamePassword(credentialsId: "${DOCKER_HUB_CREDENTIALS}", usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
                     echo "🐳 Building the backend image"
-                    sh "docker build -t ${DOCKERHUB_USER}/backend_red_line:latest -f ./Backend/odc/dockerfile ./Backend/odc"
+                    sh 'docker build -t $DOCKER_USER/backend_red_line:latest -f ./Backend/odc/dockerfile ./Backend/odc'
 
-                    echo "🐳 CBuilding the frontend image"
-                    sh "docker build -t ${DOCKERHUB_USER}/frontend_red_line:latest -f ./Frontend/dockerfile ./Frontend"
+                    echo "🐳 Building the frontend image"
+                    sh 'docker build -t $DOCKER_USER/frontend_red_line:latest -f ./Frontend/dockerfile ./Frontend'
                 }
             }
         }

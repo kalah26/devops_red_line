@@ -118,9 +118,14 @@ kubectl apply -f argocd/application-prod.yml
 
 The application uses environment-specific configuration:
 
+Secrets are **not stored in git**. Create them in the cluster before the first Argo CD sync:
+
 ```bash
-# Generate secure Django secret
-./generate-django-secret.sh
+# Create postgres-credentials and django-secret (Django key is generated)
+POSTGRES_PASSWORD='<strong-password>' ./create-secrets.sh <namespace>
+
+# Rotate the Django secret key later
+./generate-django-secret.sh <namespace>
 
 # Check configuration
 kubectl kustomize manifests/overlays/development/
@@ -175,8 +180,9 @@ devops_red_line/
 | File | Purpose |
 |------|---------|
 | `manifests/base/configmaps.yml` | Application settings |
-| `manifests/django-secret.yml` | Django secret key |
-| `manifests/database/postgres-secret.yml` | Database credentials |
+| `manifests/base/django-secret.example.yml` | Shape of the Django secret (template only) |
+| `manifests/base/database/postgres-secret.example.yml` | Shape of the database secret (template only) |
+| `create-secrets.sh` | Creates the real secrets in the cluster |
 | `.env.example` | Local development template |
 
 ## 🌍 Environments
@@ -238,7 +244,7 @@ kubectl logs -f deployment/postgres
 
 ## 🔒 Security Features
 
-- ✅ **Secrets Management**: Kubernetes secrets for sensitive data
+- ✅ **Secrets Management**: Kubernetes secrets created out-of-band (`create-secrets.sh`), never committed; ready for Sealed Secrets / External Secrets
 - ✅ **Network Policies**: Ingress-controlled access
 - ✅ **Resource Limits**: Prevent resource exhaustion
 - ✅ **Health Checks**: Automated health monitoring

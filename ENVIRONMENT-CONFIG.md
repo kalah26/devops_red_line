@@ -8,7 +8,7 @@ This document describes all environment variables used in the DevOps Red Line ap
 | Variable | Description | Default | Required |
 |----------|-------------|---------|----------|
 | `POSTGRES_USER` | PostgreSQL username | `odc` | Yes |
-| `POSTGRES_PASSWORD` | PostgreSQL password | `odc123` | Yes |
+| `POSTGRES_PASSWORD` | PostgreSQL password | none (must be set) | Yes |
 | `POSTGRES_DB` | PostgreSQL database name | `odcdb` | Yes |
 
 ## 🔧 Backend Configuration (ConfigMap: `backend-config`)

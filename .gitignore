@@ -102,7 +102,6 @@ Thumbs.db
 .cache/
 
 # Docker
-.dockerignore
 docker-compose.override.yml
 
 # Kubernetes
@@ -186,3 +185,7 @@ grafana/data/
 # SonarQube
 .sonar/
 .scannerwork/
+
+# Kubernetes secrets: only *.example.yml templates are committed
+manifests/**/*secret*.yml
+!manifests/**/*secret*.example.yml

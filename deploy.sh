@@ -5,7 +5,7 @@ echo "🚀 Deploying DevOps Red Line Application..."
 
 # Apply database resources first
 echo "📊 Deploying database components..."
-kubectl apply -f manifests/database/postgres-secret.yml
+./create-secrets.sh  # requires POSTGRES_PASSWORD
 kubectl apply -f manifests/database/postgres-pvc.yml
 kubectl apply -f manifests/database/deployment.yml
 
