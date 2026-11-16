@@ -83,7 +83,7 @@ DATABASES = {
         'ENGINE': os.getenv('DB_ENGINE', 'django.db.backends.postgresql'),
         'NAME': os.getenv('POSTGRES_DB', 'odcdb'),
         'USER': os.getenv('POSTGRES_USER', 'odc'),
-        'PASSWORD': os.getenv('POSTGRES_PASSWORD', 'odc123'),
+        'PASSWORD': os.getenv('POSTGRES_PASSWORD'),
         'HOST': os.getenv('DB_HOST', 'database'),
         'PORT': os.getenv('DB_PORT', '5432'),
     }

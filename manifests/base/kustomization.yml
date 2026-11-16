@@ -2,12 +2,12 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
 resources:
-  # Secrets and ConfigMaps
+  # ConfigMaps
+  # Secrets (django-secret, postgres-credentials) are created outside git:
+  # see create-secrets.sh and the *.example.yml files.
   - configmaps.yml
-  - django-secret.yml
   
   # Database resources
-  - database/postgres-secret.yml
   - database/postgres-pvc.yml
   - database/deployment.yml
   

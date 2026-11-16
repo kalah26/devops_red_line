@@ -7,9 +7,10 @@ resource "kubernetes_secret" "postgres_credentials" {
 
   type = "Opaque"
 
+  # The kubernetes provider base64-encodes `data` values itself
   data = {
-    POSTGRES_USER     = base64encode("odc")
-    POSTGRES_PASSWORD = base64encode("odc123")
-    POSTGRES_DB       = base64encode("odcdb")
+    POSTGRES_USER     = var.postgres_user
+    POSTGRES_PASSWORD = var.postgres_password
+    POSTGRES_DB       = var.postgres_db
   }
 }

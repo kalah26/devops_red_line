@@ -21,7 +21,7 @@ kubectl delete -f manifests/database/deployment.yml --ignore-not-found=true
 
 # Optionally remove secrets and PVC (uncomment if you want to delete data)
 # echo "⚠️  Removing secrets and persistent data..."
-# kubectl delete -f manifests/database/postgres-secret.yml --ignore-not-found=true
+# kubectl delete secret postgres-credentials django-secret --ignore-not-found=true
 # kubectl delete -f manifests/database/postgres-pvc.yml --ignore-not-found=true
 
 echo "✅ Cleanup complete!"
