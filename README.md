@@ -8,6 +8,18 @@
 ![Kubernetes](https://img.shields.io/badge/Kubernetes-1.28+-326CE5.svg)
 ![ArgoCD](https://img.shields.io/badge/ArgoCD-GitOps-FF6B35.svg)
 ![Docker](https://img.shields.io/badge/Docker-Ready-2496ED.svg)
+![AWS CDK](https://img.shields.io/badge/AWS_CDK-TypeScript-FF9900.svg)
+![ECS Fargate](https://img.shields.io/badge/ECS-Fargate-FF9900.svg)
+![Bedrock](https://img.shields.io/badge/Amazon-Bedrock-FF9900.svg)
+
+## ☁️ Two deployment targets
+
+| Target | Stack | Where |
+| --- | --- | --- |
+| **AWS** | CDK (TypeScript): ECS Fargate, ALB, RDS PostgreSQL, Secrets Manager, KMS, Lambda, Amazon Bedrock, GitHub Actions with OIDC | [`infra/`](infra/README.md) |
+| **Kubernetes** | Kustomize dev/prod overlays, Argo CD GitOps, Jenkins CI with SonarQube | [`manifests/`](manifests/), [`argocd/`](argocd/), [`Jenkinsfile`](Jenkinsfile) |
+
+See [infra/README.md](infra/README.md) for the AWS architecture diagram, cost estimate, and deploy/teardown steps.
 
 ## 🚀 Project Description
 
